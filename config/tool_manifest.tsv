@@ -1,0 +1,46 @@
+# category	tier	label	probe	install_hint
+baseline	core	ripgrep	cmd:rg	sudo apt install -y ripgrep
+baseline	core	fzf	cmd:fzf	sudo apt install -y fzf
+baseline	core	tmux	cmd:tmux	sudo apt install -y tmux
+baseline	core	jq	cmd:jq	sudo apt install -y jq
+baseline	core	gdb	cmd:gdb	sudo apt install -y gdb
+baseline	core	gdb-multiarch	cmd:gdb-multiarch	sudo apt install -y gdb-multiarch
+baseline	core	strace	cmd:strace	sudo apt install -y strace
+baseline	core	ltrace	cmd:ltrace	sudo apt install -y ltrace
+baseline	core	readelf	cmd:readelf	sudo apt install -y binutils
+baseline	core	objdump	cmd:objdump	sudo apt install -y binutils
+rev	core	Ghidra	cmd:ghidraRun	Install a Ghidra release and add ghidraRun to PATH
+rev	core	radare2	cmd:r2	sudo apt install -y radare2
+rev	optional	Cutter	cmd:cutter	Install a Cutter release package
+rev	optional	frida-tools	cmd:frida-trace	python3 -m pip install --user frida-tools
+rev	optional	rr	cmd:rr	sudo apt install -y rr
+pwn	core	pwntools	python_module:pwn	python3 -m pip install --user pwntools
+pwn	core	checksec	cmd:checksec	sudo apt install -y checksec
+pwn	optional	pwndbg	shell:gdb -q -ex 'pi import pwndbg' -ex quit	Install pwndbg from its upstream repo and reload gdb
+pwn	core	ropper	cmd:ropper	python3 -m pip install --user ropper
+pwn	optional	ROPGadget	cmd:ROPgadget	python3 -m pip install --user ROPGadget
+pwn	optional	one_gadget	cmd:one_gadget	gem install one_gadget
+pwn	core	patchelf	cmd:patchelf	sudo apt install -y patchelf
+pwn	optional	pwninit	cmd:pwninit	Download the release binary and add it to PATH
+pwn	core	qemu-aarch64	cmd:qemu-aarch64	sudo apt install -y qemu-user
+crypto	core	SageMath	cmd:sage	sudo apt install -y sagemath
+crypto	core	pycryptodome	python_module:Crypto	python3 -m pip install --user pycryptodome
+crypto	core	gmpy2	python_module:gmpy2	python3 -m pip install --user gmpy2
+crypto	core	sympy	python_module:sympy	python3 -m pip install --user sympy
+crypto	optional	pari-gp	cmd:gp	sudo apt install -y pari-gp
+crypto	optional	hashcat	cmd:hashcat	sudo apt install -y hashcat
+crypto	optional	john	cmd:john	sudo apt install -y john
+forensics	core	tshark	cmd:tshark	sudo apt install -y tshark
+forensics	core	binwalk	cmd:binwalk	sudo apt install -y binwalk
+forensics	core	exiftool	cmd:exiftool	sudo apt install -y libimage-exiftool-perl
+forensics	optional	pngcheck	cmd:pngcheck	sudo apt install -y pngcheck
+forensics	optional	zsteg	cmd:zsteg	gem install zsteg
+forensics	optional	stegseek	cmd:stegseek	sudo apt install -y stegseek
+forensics	optional	volatility3	cmd:vol	sudo apt install -y volatility3
+web	core	ffuf	cmd:ffuf	Install ffuf and add it to PATH
+web	core	httpx	cmd:httpx	Install projectdiscovery httpx and add it to PATH
+web	core	sqlmap	cmd:sqlmap	Install sqlmap and add it to PATH
+web	core	SecLists	path:/usr/share/seclists/Discovery/Web-Content/common.txt	sudo apt install -y seclists
+web	optional	Burp Suite	cmd:burpsuite	Install Burp Suite Community or add a burpsuite launcher to PATH
+web	optional	ZAP	cmd:zaproxy	Install OWASP ZAP and add zaproxy to PATH
+web	optional	feroxbuster	cmd:feroxbuster	Install feroxbuster and add it to PATH

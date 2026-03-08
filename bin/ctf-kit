@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  ctf-kit help
+  ctf-kit ask [--any|--all] <keywords...>
+  ctf-kit search [--any|--all] <keywords...>
+  ctf-kit cheat <policy|live|common|pwn|rev|crypto|forensics|web|misc>
+  ctf-kit start [--category <name>] [--name <workspace>] <artifact-or-directory>...
+  ctf-kit new <pwn|rev|crypto|forensics|web|misc> <name>
+  ctf-kit triage <file-or-directory>
+  ctf-kit check-tools [all|baseline|rev|pwn|crypto|forensics|web]
+  ctf-kit doctor [all|baseline|rev|pwn|crypto|forensics|web] [--fix]
+  ctf-kit setup [all|baseline|rev|pwn|crypto|forensics|web] [--plan|--apply]
+  ctf-kit policy-check [--strict]
+  ctf-kit manifest
+EOF
+}
+
+command_name="${1:-help}"
+shift || true
+
+case "$command_name" in
+  help|-h|--help)
+    usage
+    ;;
+  ask|search)
+    exec "$ROOT/scripts/search_kb.sh" "$@"
+    ;;
+  cheat)
+    topic="${1:-}"
+    if [[ -z "$topic" ]]; then
+      echo "choose a topic: policy, live, common, pwn, rev, crypto, forensics, web, misc" >&2
+      exit 1
+    fi
+    target="$ROOT/knowledge/$topic.md"
+    if [[ ! -f "$target" ]]; then
+      echo "unknown topic: $topic" >&2
+      exit 1
+    fi
+    exec "${PAGER:-cat}" "$target"
+    ;;
+  start)
+    exec "$ROOT/scripts/start_challenge.sh" "$@"
+    ;;
+  new)
+    exec "$ROOT/scripts/new_challenge.sh" "$@"
+    ;;
+  triage)
+    exec "$ROOT/scripts/triage.sh" "$@"
+    ;;
+  check-tools|doctor)
+    exec "$ROOT/scripts/check_tools.sh" "$command_name" "$@"
+    ;;
+  setup)
+    exec "$ROOT/scripts/setup.sh" "$@"
+    ;;
+  policy-check)
+    exec "$ROOT/scripts/policy_check.sh" "$@"
+    ;;
+  manifest)
+    exec "${PAGER:-cat}" "$ROOT/config/tool_manifest.tsv"
+    ;;
+  *)
+    echo "unknown command: $command_name" >&2
+    usage >&2
+    exit 1
+    ;;
+esac
